@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { castleResolve, castleWaypoint, CASTLE, type Resolved } from '../world/castle';
+import { castleResolve, castleWaypoint, CASTLE, type Resolved } from '../world/fortress';
 import type { Camp, Unit, World } from './types';
 
 // ───────────────────────── spatial hash ─────────────────────────

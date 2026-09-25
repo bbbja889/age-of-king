@@ -245,10 +245,11 @@ function Director({
       br.active = 0;
       if (on) {
         const path = refs.dragonPath;
-        const u = clamp((t - 18.6) / (40 - 18.6));
-        path.getPoint(easeInOutSine(u), tmpV);
+        // burst out of the court fast, then a long majestic climb
+        const u = t < 23 ? 0.3 * smoothstep(18.6, 23, t) : 0.3 + 0.7 * easeInOutSine(clamp((t - 23) / 17));
+        path.getPoint(u, tmpV);
         dg.position.copy(tmpV);
-        path.getPoint(Math.min(1, easeInOutSine(u) + 0.01), look);
+        path.getPoint(Math.min(1, u + 0.01), look);
         const breathing = pulse(t, 26.8, 27.3, 30.6, 31.4);
         sunDirFromElev(mood.sunElev, pos);
         const target = dg.position.clone().add(breathing > 0.05 ? pos.clone().multiplyScalar(50) : look.clone().sub(dg.position).normalize().multiplyScalar(50));

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import * as THREE from 'three';
-import { buildCastleGeometry, type CastleGeometry, type CastleKind } from './castle';
+import { buildCastleGeometry, type CastleGeometry, type CastleKind } from './fortress';
 import { castleMaterials } from './materials';
 
 const geoCache = new Map<CastleKind, CastleGeometry>();

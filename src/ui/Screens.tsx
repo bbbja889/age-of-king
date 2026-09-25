@@ -331,15 +331,19 @@ function Typewriter({ text, delay = 0, speed = 24 }: { text: string; delay?: num
   useEffect(() => {
     setN(0);
     let i = 0;
-    const start = setTimeout(() => {
-      const iv = setInterval(() => {
+    let iv = 0;
+    const start = window.setTimeout(() => {
+      iv = window.setInterval(() => {
         i += 1;
         setN(i);
         if (i % 3 === 0) audio.play('uiHover', 0.3);
-        if (i >= text.length) clearInterval(iv);
+        if (i >= text.length) window.clearInterval(iv);
       }, 1000 / speed);
     }, delay * 1000);
-    return () => clearTimeout(start);
+    return () => {
+      window.clearTimeout(start);
+      window.clearInterval(iv);
+    };
   }, [text, delay, speed]);
   return (
     <span>

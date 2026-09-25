@@ -315,11 +315,11 @@ src/
 
 ## 8. Build phases and checklist
 - [x] P0: analyze the original, write this plan
-- [ ] P1: foundation (deps, fonts, theme, store, router, audio engine)
-- [ ] P2: shared world (noise, terrain, sky, castle, vegetation, particles)
-- [ ] P3: gate, intro cinematic, overlay, menu with live background
-- [ ] P4: game (simulation, physics, instanced units, player and camera, projectiles, fx, dragons, shards, cage, post-fx)
-- [ ] P5: HUD, pause, results, war map, briefing, chronicle
-- [ ] P6: ending cinematic and credits
-- [ ] P7: verify (typecheck, build, headless screenshots of every shot and screen, perf pass)
-- [ ] P8: README update, commit, push
+- [x] P1: foundation (deps, fonts, theme, store, router, audio engine)
+- [x] P2: shared world (noise, terrain, sky, castle, vegetation, particles)
+- [x] P3: gate, intro cinematic, overlay, menu with live background
+- [x] P4: game (simulation, physics, instanced units, player and camera, projectiles, fx, dragons, shards, cage, post-fx)
+- [x] P5: HUD, pause, results, war map, briefing, chronicle
+- [x] P6: ending cinematic and credits
+- [x] P7: verify (typecheck, build, headless screenshots of every shot and screen, `npm run simtest` soak test of every chapter)
+- [x] P8: README update, commit, push

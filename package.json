@@ -1,14 +1,15 @@
 {
-  "name": "app",
+  "name": "age-of-kings",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "npm run build && wrangler dev",
     "lint": "tsc --noEmit",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "npm run build && wrangler deploy",
+    "simtest": "esbuild scripts/simtest.ts --bundle --platform=node --outfile=node_modules/.cache/simtest.cjs --log-level=warning && node node_modules/.cache/simtest.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.105.6",

@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { bannerTexture, stoneTexture, type BannerKind } from './textures';
-import type { CastleKind } from './castle';
+import type { CastleKind } from './fortress';
 
 /** Shared time uniform for every wind/cloth/flicker shader. */
 export const shared = {

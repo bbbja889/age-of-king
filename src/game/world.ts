@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { Terrain } from '../world/terrain';
-import { CASTLE } from '../world/castle';
+import { CASTLE } from '../world/fortress';
 import { BOSS_NAME, LORD_NAMES, type Chapter } from '../story/campaign';
 import { rng, randRange } from '../lib/math';
 import type { Camp, KingState, Unit, UnitKind, World } from './types';

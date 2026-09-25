@@ -154,13 +154,13 @@ export function endingProgram(L: CineLayout): Program {
   const c = L.crown;
   const shots = compileShots([
     // 1. The Eclipse King falls (symbolic, in the Sun Court)
-    { start: 0, end: 5, pos: [V(-7, hC + 1.4, 36), V(-5, hC + 2, 33.5)], look: [V(0, hC + 3.2, 27.2), V(0, hC + 3, 27.2)], fov: [40, 34], shake: 0.03 },
+    { start: 0, end: 5, pos: [V(-12, hC + 2.6, 29.5), V(-10, hC + 3.1, 28.8)], look: [V(0, hC + 3.6, 27.2), V(0, hC + 3.2, 27.2)], fov: [42, 36], shake: 0.03 },
     // 2. Shards return — aerial, looking out at the pillars
     { start: 5, end: 12.5, pos: [V(-40, hC + 70, -60), V(-10, hC + 52, -40)], look: [V(0, hC + 90, 500), V(0, hC + 20, 30)], fov: [55, 48] },
     // 3. The Crown reforms
     { start: 12.5, end: 17, pos: [V(-6, hC + 3.6, 28), V(-2.6, hC + 4.6, 26.4)], look: [c.clone()], fov: [36, 30], shake: 0.02 },
     // 4. The dragon wakes — low angle
-    { start: 17, end: 25, pos: [V(-16, hC + 1.2, 42), V(-18, hC + 1.6, 44)], look: [V(0, hC + 4, 20), V(0, hC + 30, 26)], fov: [48, 56], shake: 0.12 },
+    { start: 17, end: 25, pos: [V(-13, hC + 1.4, 31), V(-15, hC + 1.9, 33)], look: [V(0, hC + 4, 20), V(0, hC + 30, 26)], fov: [50, 60], shake: 0.12 },
     // 5. Aruna's breath — following up into the eclipse
     {
       start: 25, end: 33,

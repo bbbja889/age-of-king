@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { audio } from '../audio/audio';
 import { useGameStore, type ArmyOrder } from '../store/gameStore';
 import { clamp, dampAngle, angleDelta } from '../lib/math';
-import { CASTLE } from '../world/castle';
+import { CASTLE } from '../world/fortress';
 import { blast, damage, GRAV, spawnBackup } from './combat';
 import { emit } from './fx';
 import { input } from './input';

@@ -1,7 +1,7 @@
 import type * as THREE from 'three';
 import type { Puppet, PuppetKind } from '../world/Puppets';
 import type { Terrain } from '../world/terrain';
-import type { CastleKind } from '../world/castle';
+import type { CastleKind } from '../world/fortress';
 import type { Chapter } from '../story/campaign';
 import type { ArmyOrder, CaptureState, WeaponType } from '../store/gameStore';
 

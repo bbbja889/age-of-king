@@ -54,6 +54,8 @@ class AudioEngine {
   private musicBus!: GainNode;
   private sfxBus!: GainNode;
   private reverbIn!: GainNode;
+  /** Reverb send owned by the current music bus generation (so skipping silences tails too). */
+  private musicSend!: GainNode;
   private buffers: Record<'white' | 'pink' | 'brown', AudioBuffer> = {} as never;
   private distortion!: WaveShaperNode;
   private musicTimer: number | null = null;
@@ -107,6 +109,9 @@ class AudioEngine {
     this.reverbIn.gain.value = 0.9;
     this.reverbIn.connect(reverb).connect(this.master);
 
+    this.musicSend = ctx.createGain();
+    this.musicSend.connect(this.reverbIn);
+
     this.buffers.white = this.makeNoise('white');
     this.buffers.pink = this.makeNoise('pink');
     this.buffers.brown = this.makeNoise('brown');
@@ -126,6 +131,26 @@ class AudioEngine {
     if (!this.ctx) return;
     this.master.gain.setTargetAtTime(master, this.ctx.currentTime, 0.1);
     this.musicBus.gain.setTargetAtTime(music, this.ctx.currentTime, 0.1);
+  }
+
+  /** Silence everything already scheduled on the music bus (used when skipping cinematics). */
+  resetMusicBus() {
+    if (!this.ctx) return;
+    this.stopLoop(0.05);
+    this.musicMode = 'none';
+    const old = this.musicBus;
+    const oldSend = this.musicSend;
+    old.gain.setTargetAtTime(0, this.ctx.currentTime, 0.03);
+    oldSend.gain.setTargetAtTime(0, this.ctx.currentTime, 0.03);
+    setTimeout(() => {
+      old.disconnect();
+      oldSend.disconnect();
+    }, 300);
+    this.musicSend = this.ctx.createGain();
+    this.musicSend.connect(this.reverbIn);
+    this.musicBus = this.ctx.createGain();
+    this.musicBus.gain.value = this.volumes.music;
+    this.musicBus.connect(this.master);
   }
 
   /** Temporarily duck music (e.g. on big impacts / silence beats). */
@@ -199,7 +224,7 @@ class AudioEngine {
     if (o.reverb) {
       const s = ctx.createGain();
       s.gain.value = o.reverb;
-      tail.connect(s).connect(this.reverbIn);
+      tail.connect(s).connect(o.bus === 'music' ? this.musicSend : this.reverbIn);
     }
   }
 
@@ -767,6 +792,21 @@ class AudioEngine {
         this.heartbeat(t + 2.5, 0.6);
         this.heartbeat(t + 3.4, 0.7);
         this.heartbeat(t + 4.2, 0.8);
+        break;
+      case 'thunderFar':
+        this.thunder(t, 0.45);
+        break;
+      case 'rise':
+        this.whoosh(t, 1.8, 0.45);
+        this.shimmer(t + 0.4, 0.06);
+        break;
+      case 'impact':
+        this.taiko(t, 0.7, 0.5);
+        this.noise({ dur: 2.5, gain: 0.25, attack: 0.02, when: t, color: 'brown', filter: { type: 'lowpass', freq: 400, to: 60 }, bus: 'music', reverb: 0.6 });
+        break;
+      case 'breath':
+        this.noise({ dur: 4, gain: 0.4, attack: 0.3, when: t, color: 'brown', filter: { type: 'lowpass', freq: 1800, to: 400 }, bus: 'music', reverb: 0.5 });
+        this.braam(t, 5, 0.35, 45);
         break;
       case 'shatter':
         this.taiko(t, 1.3, 0.65);

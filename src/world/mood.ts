@@ -59,8 +59,8 @@ export const MOODS = {
   eclipse: mood({
     zenith: '#040308', horizon: '#5c0f19', ground: '#0a0506', glow: '#b8261d', sun: '#ff7a44', corona: '#ffc27a',
     moon: '#050306', fog: '#1d0a0e', light: '#ff6048', hemiSky: '#5a2c3c', hemiGround: '#140a0a', sunIntensity: 0,
-    glowAmt: 1.0, coronaAmt: 1.6, stars: 0.75, eclipse: 1, sunElev: 0.2, fogDensity: 0.0013, lightIntensity: 1.35,
-    hemiIntensity: 0.8, exposure: 1.1,
+    glowAmt: 1.0, coronaAmt: 1.6, stars: 0.75, eclipse: 1, sunElev: 0.2, fogDensity: 0.0013, lightIntensity: 1.5,
+    hemiIntensity: 1.1, exposure: 1.15,
   }),
   amber: mood({
     zenith: '#121731', horizon: '#b8562a', ground: '#1a1210', glow: '#ff8a3a', sun: '#ffd2a0', corona: '#ffd9a0',

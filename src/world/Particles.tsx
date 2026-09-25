@@ -128,7 +128,8 @@ export function AmbientParticles({
 const fireVert = /* glsl */ `
 attribute vec3 aBase;
 attribute vec3 aSeed;
-uniform float uTime, uScale, uIntensity;
+attribute float aStart;
+uniform float uTime, uScale, uIntensity, uClock;
 varying float vLife;
 varying float vSeed;
 void main() {
@@ -145,7 +146,8 @@ void main() {
   gl_Position = projectionMatrix * mv;
   vLife = life;
   vSeed = aSeed.y;
-  gl_PointSize = mix(1.5, 0.35, life) * sc * uScale * uIntensity / max(-mv.z, 0.5);
+  float lit = step(aStart, uClock) * min(1.0, (uClock - aStart) * 0.8 + 0.2);
+  gl_PointSize = min(mix(1.5, 0.35, life) * sc * uScale * uIntensity * lit / max(-mv.z, 0.5), 90.0);
 }
 `;
 const fireFrag = /* glsl */ `
@@ -169,16 +171,21 @@ export interface FireSource {
   y: number;
   z: number;
   scale: number;
+  /** clock time at which this fire ignites (see `clock`) */
+  start?: number;
 }
 
 /** One draw call for many flames (braziers, torches, burning ruins). */
-export function FireField({ sources, perFire = 22, intensity = 1 }: { sources: FireSource[]; perFire?: number; intensity?: number }) {
+export function FireField({
+  sources, perFire = 22, intensity = 1, clock,
+}: { sources: FireSource[]; perFire?: number; intensity?: number; clock?: () => number }) {
   const { size } = useThree();
   const geo = useMemo(() => {
     const n = sources.length * perFire;
     const r = rng(n + 3);
     const base = new Float32Array(n * 3);
     const seed = new Float32Array(n * 3);
+    const start = new Float32Array(n);
     sources.forEach((s, i) => {
       for (let k = 0; k < perFire; k++) {
         const o = (i * perFire + k) * 3;
@@ -188,12 +195,14 @@ export function FireField({ sources, perFire = 22, intensity = 1 }: { sources: F
         seed[o] = r();
         seed[o + 1] = r();
         seed[o + 2] = s.scale;
+        start[i * perFire + k] = s.start ?? -1e6;
       }
     });
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(base, 3));
     g.setAttribute('aBase', new THREE.BufferAttribute(base, 3));
     g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 3));
+    g.setAttribute('aStart', new THREE.BufferAttribute(start, 1));
     g.computeBoundingSphere();
     return g;
   }, [sources, perFire]);
@@ -205,12 +214,13 @@ export function FireField({ sources, perFire = 22, intensity = 1 }: { sources: F
         transparent: true,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
-        uniforms: { uTime: shared.uTime, uScale: { value: 400 }, uIntensity: { value: intensity } },
+        uniforms: { uTime: shared.uTime, uScale: { value: 400 }, uIntensity: { value: intensity }, uClock: { value: 1e6 } },
       }),
     [intensity],
   );
   useFrame(() => {
     mat.uniforms.uScale.value = size.height * 0.5;
+    mat.uniforms.uClock.value = clock ? clock() : 1e6;
   });
   if (!sources.length) return null;
   return <points geometry={geo} material={mat} renderOrder={6} />;

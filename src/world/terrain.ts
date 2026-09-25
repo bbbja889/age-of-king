@@ -79,7 +79,7 @@ export class Terrain {
       if (ring) {
         const d = Math.hypot(x, z);
         const m = smoothstep(ring.r0, ring.r1, d);
-        if (m > 0) h += m * ring.height * (0.55 + 0.6 * ridged(n2, x / 260 + 17, z / 260 - 5, 5));
+        if (m > 0) h += m * ring.height * (0.62 + 0.3 * fbm(n1, x / 420 + 17, z / 420 - 5, 4) + 0.22 * ridged(n2, x / 520, z / 520, 3));
       }
       return h;
     };

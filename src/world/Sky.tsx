@@ -15,7 +15,7 @@ void main() {
 const frag = /* glsl */ `
 uniform vec3 uZenith, uHorizon, uGround, uGlow, uSun, uCorona, uMoon;
 uniform vec3 uSunDir, uMoonDir;
-uniform float uSunIntensity, uGlowAmt, uCoronaAmt, uStars, uTime, uSunSize, uMoonSize, uFlash;
+uniform float uSunIntensity, uGlowAmt, uCoronaAmt, uStars, uTime, uSunSize, uMoonSize, uFlash, uMoonVis;
 varying vec3 vDir;
 
 float hash(vec3 p) {
@@ -34,7 +34,7 @@ void main() {
   float sd = dot(dir, uSunDir);
   float ang = acos(clamp(sd, -1.0, 1.0));
   float md = acos(clamp(dot(dir, uMoonDir), -1.0, 1.0));
-  float moon = 1.0 - smoothstep(uMoonSize * 0.985, uMoonSize, md);
+  float moon = (1.0 - smoothstep(uMoonSize * 0.985, uMoonSize, md)) * uMoonVis;
 
   // atmospheric glow toward the sun, strongest along the horizon
   float glow = pow(max(sd, 0.0), 5.0) * 0.55 + pow(max(sd, 0.0), 48.0) * 0.9;
@@ -58,7 +58,7 @@ void main() {
   col += uCorona * exp(-ang * 3.0) * 0.25 * uCoronaAmt;
 
   // moon body with faint earthshine
-  col = mix(col, uMoon + uCorona * 0.015 * uCoronaAmt, moon * step(0.01, uCoronaAmt + uSunIntensity));
+  col = mix(col, uMoon + uCorona * 0.015 * uCoronaAmt, moon);
 
   // stars
   if (y > -0.02 && uStars > 0.001) {
@@ -107,6 +107,7 @@ export function createSkyMaterial() {
       uSunSize: { value: SUN_SIZE },
       uMoonSize: { value: MOON_SIZE },
       uFlash: { value: 0 },
+      uMoonVis: { value: 0 },
     },
   });
 }
@@ -164,6 +165,7 @@ export function Atmosphere({ mood, focus, shadowSize = 90, shadowMapSize = 2048,
     u.uStars.value = m.stars;
     u.uTime.value = state.clock.elapsedTime;
     u.uFlash.value = flash ? flash.current : 0;
+    u.uMoonVis.value = Math.min(1, Math.max(0, (m.eclipse - 0.05) * 4));
 
     if (skyRef.current) skyRef.current.position.copy(camera.position);
 

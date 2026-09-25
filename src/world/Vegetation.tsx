@@ -222,8 +222,8 @@ function bladeGeometry() {
   const pos: number[] = [];
   const col: number[] = [];
   const nrm: number[] = [];
-  const base = new THREE.Color('#1f2e12');
-  const tip = new THREE.Color('#9aa65a');
+  const base = new THREE.Color('#2c3d1a');
+  const tip = new THREE.Color('#b5bf6e');
   const c = new THREE.Color();
   for (const [h, w] of segs) {
     c.copy(base).lerp(tip, h);
@@ -326,8 +326,8 @@ export function GrassField({
         const hs = hash2(x * 0.37, z * 0.71);
         p.set(x, y - 0.02, z);
         q.setFromAxisAngle(up, hs * Math.PI * 2);
-        const sc = 0.45 + hs * 0.9;
-        s.set(1.1 + hx * 0.8, sc, 1);
+        const sc = 0.3 + hs * 0.5;
+        s.set(0.7 + hx * 0.5, sc, 1);
         m.compose(p, q, s);
         mesh.setMatrixAt(n, m);
         col.setHSL(0.19 + hz * 0.07, 0.35 + hx * 0.2, 0.42 + hs * 0.2).multiply(tintColor);

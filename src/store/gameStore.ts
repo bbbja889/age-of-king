@@ -130,6 +130,8 @@ interface GameState {
   progress: Progress;
   seenIntro: boolean;
   chapterId: string;
+  /** increments every time a battle starts, so retries build a fresh world */
+  runId: number;
   paused: boolean;
   hud: HudState;
   banners: Banner[];
@@ -168,6 +170,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     }
   })(),
   chapterId: 'start',
+  runId: 0,
   paused: false,
   hud: EMPTY_HUD,
   banners: [],
@@ -197,7 +200,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   startChapter: () => {
     const progress = { ...get().progress, lastPlayed: get().chapterId };
     save(PROGRESS_KEY, progress);
-    set({ progress, screen: 'playing', prevScreen: 'briefing', paused: false, banners: [], results: null });
+    set({ progress, screen: 'playing', prevScreen: 'briefing', paused: false, banners: [], results: null, runId: get().runId + 1 });
   },
   completeChapter: (id) => {
     const p = get().progress;

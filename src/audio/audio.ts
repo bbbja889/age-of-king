@@ -588,9 +588,9 @@ class AudioEngine {
     if (d > 140) return;
     const att = vol / Math.pow(1 + d / 14, 1.3);
     if (att < 0.02) return;
-    // camera right vector = (cos(yaw), -sin(yaw)) for forward (-sin, -cos)
-    const rx = Math.cos(this.listener.yaw);
-    const rz = -Math.sin(this.listener.yaw);
+    // listener yaw: forward = (sin yaw, cos yaw); screen-right = (-cos yaw, sin yaw)
+    const rx = -Math.cos(this.listener.yaw);
+    const rz = Math.sin(this.listener.yaw);
     const pan = d > 0.5 ? (dx * rx + dz * rz) / d : 0;
     this.play(name, att, pan * 0.85);
   }

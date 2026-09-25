@@ -1,5 +1,6 @@
 import { audio } from '../audio/audio';
 import { useGameStore } from '../store/gameStore';
+import { BOSS_PHASE_LINE } from '../story/campaign';
 import { clamp, dampAngle } from '../lib/math';
 import { blast, damage, GRAV, kill } from './combat';
 import { emit } from './fx';
@@ -520,6 +521,7 @@ function bossTick(w: World, u: Unit, dt: number) {
     u.speed *= 1.3;
     u.damage *= 1.2;
     useGameStore.getState().pushBanner({ title: 'THE ECLIPSE DEEPENS', subtitle: 'Kaalrath draws on the dark', tone: 'crimson' });
+    useGameStore.getState().speak('Kaalrath', BOSS_PHASE_LINE);
     audio.play('roar', 1);
     audio.play('thunder', 1);
     w.shake = 0.8;

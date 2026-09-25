@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useGameStore, type HudState } from '../store/gameStore';
-import { CHAPTERS, dawnForProgress } from '../story/campaign';
+import { CHAPTERS, OPENING_LINES, TAUNTS, dawnForProgress } from '../story/campaign';
 import { audio } from '../audio/audio';
 import { createWorld } from './world';
 import { updateUnits } from './ai';
@@ -276,7 +276,20 @@ export default function Game() {
     window.addEventListener('keydown', esc);
     useGameStore.getState().pushBanner({ title: `CHAPTER ${world.chapter.numeral}`, subtitle: world.chapter.title, tone: 'gold' });
     setTimeout(() => useGameStore.getState().pushBanner({ title: 'OBJECTIVE', subtitle: world.chapter.objective, tone: 'ember' }), 3200);
+    const timers: number[] = [];
+    (OPENING_LINES[world.chapter.id] ?? []).forEach(([who, line], i) => {
+      timers.push(window.setTimeout(() => useGameStore.getState().speak(who, line), 7500 + i * 6000));
+    });
+    // the Eclipse King watches: an occasional taunt while the battle rages
+    let taunt = Math.floor(Math.random() * TAUNTS.length);
+    const tauntTimer = window.setInterval(() => {
+      const s = useGameStore.getState();
+      if (s.screen !== 'playing' || s.paused || world.ended) return;
+      s.speak('Kaalrath', TAUNTS[taunt++ % TAUNTS.length]);
+    }, 95000);
     return () => {
+      timers.forEach((t) => window.clearTimeout(t));
+      window.clearInterval(tauntTimer);
       detach();
       document.removeEventListener('pointerlockchange', onLock);
       window.removeEventListener('keydown', esc);

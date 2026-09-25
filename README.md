@@ -5,6 +5,7 @@
 <h1 align="center">AGE OF KINGS — <i>The Endless Eclipse</i></h1>
 
 <p align="center"><strong>A cinematic, story-driven, real-time 3D war saga for the browser.</strong><br/>
+<strong>Developed by Yashraj Ghemud</strong><br/>
 React 18 · React Three Fiber · three.js · Web Audio · no downloaded assets: every model, texture, cinematic and note of music is generated at runtime.</p>
 
 > *Before there were kings, there was the Sun. Then your brother traded it for a crown of shadow.*

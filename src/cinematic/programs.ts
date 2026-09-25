@@ -99,20 +99,29 @@ export function introProgram(L: CineLayout): Program {
   ]);
 
   const subtitles: Subtitle[] = [
-    { start: 1.4, end: 6.5, text: 'Before there were kings… there was the Sun.' },
+    { start: 0.4, end: 3.9, text: 'Yashraj Ghemud|presents', style: 'presents' },
+    { start: 4.0, end: 6.8, text: 'Before there were kings… there was the Sun.' },
     { start: 8.6, end: 15.2, text: 'And the Sun had a keeper — the Crown of Suryagarh.' },
     { start: 16.8, end: 22.6, text: 'For a thousand years its light held back the dark… and kept the dragon dreaming.' },
     { start: 24.2, end: 30.4, text: 'Until the night your brother traded the Sun for a crown of shadow.' },
+    { start: 30.5, end: 32.1, text: 'ONE BETRAYAL', style: 'card' },
     { start: 32.2, end: 36.6, text: 'Kaalrath|The Eclipse King', style: 'name' },
+    { start: 39.0, end: 40.9, text: 'ONE NIGHT', style: 'card' },
     { start: 44.2, end: 50.4, text: 'Seven shards fell. Seven traitor lords rose to claim them.' },
+    { start: 50.5, end: 51.7, text: 'SEVEN TRAITORS', style: 'card' },
     { start: 51.8, end: 57.4, text: 'And from the Ashen Deep… the Rakshas answered.' },
     { start: 58.8, end: 63.6, text: 'Yet beneath the ashes, the dragon still dreams…' },
-    { start: 64.8, end: 68.4, text: '…and one king still stands.' },
+    { start: 63.7, end: 64.9, text: 'ONE KING', style: 'card' },
+    { start: 65.0, end: 68.4, text: '…and one king still stands.' },
     { start: 69.9, end: 71.8, text: 'Rise, Vikram. Take back the light.' },
   ];
 
   const cues: Cue[] = [
     { t: 0.15, name: 'opening' },
+    { t: 30.5, name: 'card' },
+    { t: 39.0, name: 'cardSilent' },
+    { t: 50.5, name: 'card' },
+    { t: 63.7, name: 'card' },
     { t: 7, name: 'suryagarh' },
     { t: 16, name: 'crown' },
     { t: 23, name: 'eclipse' },
@@ -172,7 +181,8 @@ export function endingProgram(L: CineLayout): Program {
     { start: 41, end: ENDING_END + 5, pos: [V(-90, hC + 70, 140), V(-40, hC + 190, 240)], look: [V(0, hC + 20, 30), V(0, hC + 60, 500)], fov: [52, 56] },
   ]);
   const subtitles: Subtitle[] = [
-    { start: 0.8, end: 4.6, text: 'The Eclipse King falls.' },
+    { start: 0.6, end: 2.6, text: 'The Eclipse King falls.' },
+    { start: 2.7, end: 5.0, text: '“It was never mine, brother… the Deep wanted the Sun.”' },
     { start: 6.2, end: 11.4, text: 'Shard by shard, the Crown remembers its shape.' },
     { start: 18.4, end: 23.4, text: 'And the dragon… wakes.' },
     { start: 34.2, end: 39.4, text: 'Dawn.' },

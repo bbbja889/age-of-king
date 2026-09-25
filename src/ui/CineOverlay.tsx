@@ -5,7 +5,34 @@ import { endingProgram, ENDING_END, INTRO_END, introProgram, TITLE_T } from '../
 import { TitleBlock, type TitleStage } from './TitleBlock';
 import { audio } from '../audio/audio';
 
-function Subtitle({ text, style }: { text: string; style?: 'narration' | 'name' }) {
+function Subtitle({ text, style }: { text: string; style?: 'narration' | 'name' | 'card' | 'presents' }) {
+  if (style === 'presents') {
+    const [who, what] = text.split('|');
+    return (
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+        <div className="gold-text" style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(1.3rem, 3vw, 2.6rem)', letterSpacing: '0.55em', paddingLeft: '0.55em', animation: 'bannerIn 2.2s cubic-bezier(0.2,0.8,0.2,1) both' }}>
+          {who.toUpperCase()}
+        </div>
+        <div className="narration" style={{ fontSize: 'clamp(1rem, 1.6vw, 1.4rem)', color: 'rgba(240,225,200,0.75)', letterSpacing: '0.4em', marginTop: '0.8rem', animation: 'fadeIn 1.5s ease 0.9s both' }}>
+          {what}
+        </div>
+      </div>
+    );
+  }
+  if (style === 'card') {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div style={{ animation: 'shake 0.4s ease-out both' }}>
+          <div
+            className="gold-text"
+            style={{ fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 'clamp(2.4rem, 8vw, 7rem)', letterSpacing: '0.3em', paddingLeft: '0.3em', filter: 'drop-shadow(0 0 30px rgba(255,120,40,0.6)) drop-shadow(0 4px 16px #000)', animation: 'letterSlam 0.8s cubic-bezier(0.2,0.9,0.2,1) both' }}
+          >
+            {text}
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (style === 'name') {
     const [name, epithet] = text.split('|');
     return (
@@ -151,6 +178,7 @@ export function CineOverlay({ program, onDone }: { program: 'intro' | 'ending'; 
             THE AGE OF KINGS BEGINS
           </h2>
           <div style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.3em', fontSize: '0.8rem', color: 'rgba(245,230,200,0.7)', lineHeight: 2.2, animation: 'fadeUp 2s ease 3.2s both' }}>
+            <div style={{ color: '#ffd98a', fontSize: '1rem', letterSpacing: '0.4em', marginBottom: '0.6rem' }}>DEVELOPED BY YASHRAJ GHEMUD</div>
             <div>A REMASTER OF AGE OF KINGS</div>
             <div>STORY · CINEMATICS · SCORE — ALL PROCEDURAL, ALL REAL-TIME</div>
             <div style={{ marginTop: '1rem', color: '#ffd98a' }}>THANK YOU FOR PLAYING, YOUR MAJESTY</div>

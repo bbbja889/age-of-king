@@ -90,6 +90,15 @@ export function TitleBlock({ stage }: { stage: TitleStage }) {
       >
         THE ENDLESS ECLIPSE
       </div>
+      <div
+        style={{
+          fontFamily: 'var(--font-display)', fontSize: 'clamp(0.6rem, 1vw, 0.85rem)', letterSpacing: '0.5em', paddingLeft: '0.5em',
+          marginTop: '1.1rem', color: '#ffe9c2', fontWeight: 700, textShadow: '0 0 6px #000, 0 0 14px #000, 0 2px 4px #000',
+          animation: animate ? 'fadeIn 1.6s ease 3s both' : undefined,
+        }}
+      >
+        A GAME BY YASHRAJ GHEMUD
+      </div>
       </div>
     </div>
   );

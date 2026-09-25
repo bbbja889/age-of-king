@@ -66,6 +66,12 @@ export interface Banner {
   tone: 'gold' | 'crimson' | 'ember' | 'blue';
 }
 
+export interface Dialogue {
+  id: number;
+  speaker: string;
+  text: string;
+}
+
 export interface ResultStats {
   kills: number;
   lords: number;
@@ -135,6 +141,7 @@ interface GameState {
   paused: boolean;
   hud: HudState;
   banners: Banner[];
+  dialogue: Dialogue | null;
   results: Results | null;
   showHelp: boolean;
 
@@ -150,6 +157,7 @@ interface GameState {
   setHud: (h: HudState) => void;
   pushBanner: (b: Omit<Banner, 'id'>) => void;
   dropBanner: (id: number) => void;
+  speak: (speaker: string, text: string) => void;
   finish: (r: Results) => void;
   toggleHelp: () => void;
   dawn: () => number;
@@ -174,6 +182,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   paused: false,
   hud: EMPTY_HUD,
   banners: [],
+  dialogue: null,
   results: null,
   showHelp: true,
 
@@ -200,7 +209,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   startChapter: () => {
     const progress = { ...get().progress, lastPlayed: get().chapterId };
     save(PROGRESS_KEY, progress);
-    set({ progress, screen: 'playing', prevScreen: 'briefing', paused: false, banners: [], results: null, runId: get().runId + 1 });
+    set({ progress, screen: 'playing', prevScreen: 'briefing', paused: false, banners: [], dialogue: null, results: null, runId: get().runId + 1 });
   },
   completeChapter: (id) => {
     const p = get().progress;
@@ -217,6 +226,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     set({ banners: [...get().banners.slice(-2), banner] });
   },
   dropBanner: (id) => set({ banners: get().banners.filter((b) => b.id !== id) }),
+  speak: (speaker, text) => set({ dialogue: { id: bannerId++, speaker, text } }),
   finish: (results) => {
     if (results.victory) get().completeChapter(results.chapterId);
     set({ results, screen: results.victory && results.chapterId === 'final_battle' ? 'ending' : 'results' });

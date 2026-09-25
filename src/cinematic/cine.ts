@@ -80,8 +80,8 @@ export interface Subtitle {
   start: number;
   end: number;
   text: string;
-  /** 'name' renders as a large carved name card */
-  style?: 'narration' | 'name';
+  /** 'name' = carved name card, 'card' = trailer intertitle, 'presents' = studio card */
+  style?: 'narration' | 'name' | 'card' | 'presents';
 }
 
 export interface Cue {

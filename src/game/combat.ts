@@ -4,6 +4,7 @@ import { emit, fx } from './fx';
 import { queryRadius } from './physics';
 import { makeUnit } from './world';
 import type { Unit, World } from './types';
+import { BOSS_DEATH_LINE, DYING_WORDS } from '../story/campaign';
 
 export const GRAV = 22;
 
@@ -89,6 +90,7 @@ function lordFalls(w: World, lord: Unit) {
   w.timeScale = 0.2;
   w.shards.push({ x: lord.x, y: lord.y + 1.5, z: lord.z, t: 0, collected: false });
   say('TRAITOR LORD SLAIN', lord.lordName, 'gold');
+  useGameStore.getState().speak(lord.lordName ?? 'Traitor Lord', DYING_WORDS[Math.floor(Math.random() * DYING_WORDS.length)]);
   const camp = lord.camp;
   if (camp) {
     camp.fallen = true;
@@ -119,6 +121,7 @@ function bossFalls(w: World, boss: Unit) {
   w.killcam = { t: 0, dur: 4, x: boss.x, y: boss.y, z: boss.z, boss: true };
   w.timeScale = 0.12;
   say('THE ECLIPSE KING FALLS', 'Kaalrath is defeated', 'gold');
+  useGameStore.getState().speak('Kaalrath', BOSS_DEATH_LINE);
   for (const u of w.units) {
     if (u.alive && u.team === 1) {
       if (u.type === 'rakshas') {

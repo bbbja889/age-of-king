@@ -1,4 +1,5 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { audio } from '../audio/audio';
 import { useGameStore, type Banner } from '../store/gameStore';
 import type { World } from '../game/types';
 import { COOLDOWNS, COSTS } from '../game/player';
@@ -208,6 +209,34 @@ function Minimap({ world }: { world: World }) {
   );
 }
 
+function DialogueLine() {
+  const d = useGameStore((s) => s.dialogue);
+  const [shown, setShown] = useState<number | null>(null);
+  useEffect(() => {
+    if (!d) return;
+    setShown(d.id);
+    audio.play('uiHover', 0.6);
+    const t = setTimeout(() => setShown(null), 3000 + d.text.length * 55);
+    return () => clearTimeout(t);
+  }, [d]);
+  if (!d || shown !== d.id) return null;
+  const villain = d.speaker === 'Kaalrath';
+  const lord = d.speaker !== 'Kaalrath' && d.speaker !== 'Devdutt' && d.speaker !== 'Suparna';
+  const col = villain ? '#ff8a7a' : lord ? '#ffb070' : '#ffd98a';
+  return (
+    <div key={d.id} className="absolute left-1/2 -translate-x-1/2 text-center" style={{ bottom: 104, width: 'min(760px, 86vw)', animation: 'fadeUp 0.6s cubic-bezier(0.2,0.8,0.2,1) both' }}>
+      <div style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.4em', fontSize: 11, color: col, textShadow: villain ? '0 0 14px rgba(192,40,58,0.9)' : undefined }}>
+        {villain ? '☾ ' : '☀ '}{d.speaker.toUpperCase()}
+      </div>
+      <div className="narration" style={{ fontSize: 'clamp(1.05rem, 1.6vw, 1.45rem)', color: '#f5ead6', marginTop: 4 }}>
+        “{d.text.split('').map((ch, i) => (
+          <span key={i} style={{ animation: `fadeIn 0.3s ease ${i * 0.018}s both` }}>{ch}</span>
+        ))}”
+      </div>
+    </div>
+  );
+}
+
 export function HUD({ world }: { world: World }) {
   const hud = useGameStore((s) => s.hud);
   const banners = useGameStore((s) => s.banners);
@@ -281,6 +310,8 @@ export function HUD({ world }: { world: World }) {
           <BannerView key={b.id} b={b} />
         ))}
       </div>
+
+      <DialogueLine />
 
       {/* crosshair */}
       {!captured && (

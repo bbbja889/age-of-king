@@ -47,7 +47,7 @@ export const CHAPTERS: Record<string, Chapter> = {
       'Each of them carries a splinter of the Sun Crown. Take them back, and the sky will remember the colour of morning.',
     ],
     objective: 'Slay the traitor lords around Suryagarh and reclaim their crown shards.',
-    victory: 'The hills are ours again, and for a moment the eclipse bleeds amber at its edge.',
+    victory: 'The hills are ours again, and the eclipse bleeds amber at its edge. But a dying lord whispered one word before the end: “Kaalgarh.” Your brother is waiting.',
     choices: [
       { text: 'Ride into the Burning Plains', nextNodeId: 'invasion_1', hint: 'Invasion · Rakshas warbands' },
       { text: 'Seek the Eagle-Queen of the East', nextNodeId: 'diplomacy_1', hint: 'Alliance · Start with eagles and a dragon' },
@@ -71,7 +71,7 @@ export const CHAPTERS: Record<string, Chapter> = {
       'Five lords hold the plains. Strike fast, my King. Every hour we wait, the Ashen Deep sends more of its children up into the dark.',
     ],
     objective: 'Break the five warbands of the Burning Plains.',
-    victory: 'The fires gutter out across Agnikshetra. The Rakshas remember what it is to fear.',
+    victory: 'The fires gutter out across Agnikshetra. Yet the Rakshas did not flee. They dug, down, toward something that answered from far below.',
     choices: [
       { text: 'March on the Obsidian Citadel', nextNodeId: 'final_battle', hint: 'Final battle · Face Kaalrath' },
       { text: 'Secure the Ember Roads first', nextNodeId: 'defense_2', hint: 'Escort · More lords, more ember' },
@@ -94,7 +94,7 @@ export const CHAPTERS: Record<string, Chapter> = {
       'Her eagles fly with you, my King, and an ember-kin dragon has been woken in your name. Break the siege of the Heights.',
     ],
     objective: 'Lift the siege of the Garuda Heights. Slay the four besieging lords.',
-    victory: 'Suparna\'s eagles darken the sky. For once, the darkness is ours.',
+    victory: 'Suparna\'s eagles darken the sky. Then her scouts return pale: the Obsidian Citadel is not a fortress. It is a door.',
     choices: [{ text: 'Fly with the Eagle-Queen to the Citadel', nextNodeId: 'final_battle', hint: 'Final battle · Face Kaalrath' }],
     map: { x: 74, y: 30 },
     config: {
@@ -114,7 +114,7 @@ export const CHAPTERS: Record<string, Chapter> = {
       'Hold the walls, my King. Each lord will send wave after wave against our gates. Kill the lords, and the waves will break.',
     ],
     objective: 'Defend Suryagarh from the war-horn waves and slay the three siege lords.',
-    victory: 'The walls held. The songs will say the king stood in the gate himself.',
+    victory: 'The walls held. But in the ashes of the last siege-tower, a message burned into the stone: “Brother, come home.”',
     choices: [{ text: 'Counter-attack into the Burning Plains', nextNodeId: 'invasion_1', hint: 'Invasion · Carry the fight to them' }],
     map: { x: 52, y: 74 },
     config: {
@@ -134,7 +134,7 @@ export const CHAPTERS: Record<string, Chapter> = {
       'Four lords raid the caravans. Clear the roads, gather ember, and let the Citadel hear us coming.',
     ],
     objective: 'Clear the four raider lords from the Ember Roads.',
-    victory: 'The caravans roll again. The eggs in the vaults of Suryagarh have begun to stir.',
+    victory: 'The caravans roll again, and the eggs in the vaults of Suryagarh have begun to stir, as if they know the final battle is near.',
     choices: [{ text: 'March on the Obsidian Citadel', nextNodeId: 'final_battle', hint: 'Final battle · Face Kaalrath' }],
     map: { x: 18, y: 70 },
     config: {
@@ -233,3 +233,34 @@ export const CODEX: CodexEntry[] = [
     text: 'Raised in a single night from black glass on the rim of the Ashen Deep. Nothing grows within a mile of its walls.',
   },
 ];
+
+/** In-battle dialogue: the voices that drive suspense between the cinematics. */
+export type Speaker = 'Devdutt' | 'Kaalrath' | 'Traitor Lord' | 'Suparna';
+
+export const OPENING_LINES: Record<string, [Speaker, string][]> = {
+  start: [['Devdutt', 'Three lords, my King. Take their shards, and pray Kaalrath is not watching.']],
+  invasion_1: [['Devdutt', 'The smoke hides them. Listen for the war-horns and ride toward the fire.']],
+  diplomacy_1: [['Suparna', 'My eagles fly for you, King of the Sun. Do not make me regret it.']],
+  defense_1: [['Devdutt', 'They come for the walls. Hold the gate and the city holds with you.']],
+  defense_2: [['Devdutt', 'Every ember we gather is a dragon we can wake. Gather them all.']],
+  final_battle: [['Kaalrath', 'Come then, little brother. Let us finish what Father started.']],
+};
+
+export const TAUNTS: string[] = [
+  'Every shard you take, I take back in blood.',
+  'Do you feel it, Vikram? The dark is patient. It has already won.',
+  'Father chose wrong. The Deep did not.',
+  'Keep riding, brother. Every road leads to me.',
+];
+
+export const DYING_WORDS: string[] = [
+  'He promised… the sun would never rise again…',
+  'You are too late… the Deep is already awake…',
+  'Kaalrath… forgive me…',
+  'Look down, king… not up… the eclipse was only the door…',
+  'The shard… burns… take it… take it away…',
+];
+
+export const CAPTURE_LINE = 'Bring him to me alive. The Rite needs a king\'s blood, and I need to see his face.';
+export const BOSS_PHASE_LINE = 'You think the Deep serves ME? I serve IT. When the sun dies, brother, so do we all.';
+export const BOSS_DEATH_LINE = 'Vikram… the eclipse… it was never mine…';

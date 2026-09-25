@@ -843,6 +843,15 @@ class AudioEngine {
         this.thunder(t, 1);
         this.taiko(t, 0.8, 0.7);
         break;
+      case 'card':
+        this.taiko(t, 1.2, 0.55);
+        this.noise({ dur: 0.9, gain: 0.3, attack: 0.01, when: t, color: 'pink', filter: { type: 'lowpass', freq: 2400, to: 200 }, bus: 'music', reverb: 0.7 });
+        this.tone({ type: 'sawtooth', freq: midi(26), dur: 1.6, gain: 0.12, when: t, filter: { type: 'lowpass', freq: 300 }, bus: 'music', reverb: 0.6 });
+        break;
+      case 'cardSilent':
+        this.tone({ freq: midi(86), dur: 3, gain: 0.05, attack: 0.5, when: t, bus: 'music', reverb: 0.9 });
+        this.heartbeat(t + 0.3, 0.7);
+        break;
       case 'title':
         this.braam(t, 7, 0.6, 38);
         this.taiko(t, 1.4, 0.6);

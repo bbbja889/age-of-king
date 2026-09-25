@@ -93,6 +93,7 @@ export function MainMenu({ fromIntro }: { fromIntro: boolean }) {
         className="absolute right-8 bottom-8 text-right"
         style={{ fontFamily: 'var(--font-display)', letterSpacing: '0.3em', fontSize: '0.62rem', color: 'rgba(245,230,200,0.45)', lineHeight: 2, animation: `fadeUp 1s ease ${base + 1}s both` }}
       >
+        <div style={{ color: 'rgba(255,217,138,0.75)' }}>DEVELOPED BY YASHRAJ GHEMUD</div>
         <div>REMASTERED EDITION</div>
         <div>MOUSE + KEYBOARD RECOMMENDED</div>
       </div>

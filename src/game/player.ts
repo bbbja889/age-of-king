@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { audio } from '../audio/audio';
 import { useGameStore, type ArmyOrder } from '../store/gameStore';
+import { CAPTURE_LINE } from '../story/campaign';
 import { clamp, dampAngle, angleDelta } from '../lib/math';
 import { CASTLE } from '../world/fortress';
 import { blast, damage, GRAV, spawnBackup } from './combat';
@@ -109,6 +110,7 @@ function capture(w: World, dt: number) {
     k.riding = null;
     u.vx = u.vz = 0;
     audio.play('cage');
+    useGameStore.getState().speak('Kaalrath', CAPTURE_LINE);
     say('THE KING IS TAKEN', `They drag you toward ${camp.lordName.split(' ')[0]}'s keep — press B for the war-horn, O for a dragon`, 'crimson');
   }
   if (k.capture === 'free' || k.capture === 'trapping') return;

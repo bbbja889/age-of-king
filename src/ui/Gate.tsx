@@ -167,6 +167,7 @@ export function Gate({ onAwaken }: { onAwaken: () => void }) {
           TOUCH THE EMBER TO AWAKEN
         </div>
         <div style={{ marginTop: '0.8rem', fontSize: '0.7rem', letterSpacing: '0.25em', color: 'rgba(255,255,255,0.35)' }}>HEADPHONES RECOMMENDED</div>
+        <div style={{ marginTop: '2.2rem', fontSize: '0.62rem', letterSpacing: '0.45em', color: 'rgba(255,217,138,0.45)' }}>A GAME BY YASHRAJ GHEMUD</div>
       </div>
     </div>
   );
